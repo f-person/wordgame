@@ -215,7 +215,7 @@ def is_valid_word(word, hand, word_list):
 ##    if word.lower() not in word_list: return False
 ##    if len(word.lower())>=len(hand):
 ##        return all(i in word.lower() for i in hand)
-##    return False
+##    return False 
     
     word=word.lower()
     number=0
