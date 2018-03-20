@@ -142,7 +142,7 @@ def deal_hand(n):
     num_vowels = int(math.ceil(n / 3))
     hand['*'] = 1
 
-    for i in range(num_vowels):
+    for i in range(num_vowels-1):
         x = random.choice(VOWELS)
         hand[x] = hand.get(x, 0) + 1
     
@@ -183,6 +183,18 @@ def update_hand(hand, word):
 #
 # Problem #3: Test word validity
 #
+
+def match_with_gaps(my_word, other_word):
+    h = 0
+    word = ''.join(my_word.split())
+    if len(word) == len(other_word):
+      for i, word1 in enumerate(word):
+        if word1 == other_word[i] or word1 == '*':
+          h += 1
+          if h == len(other_word):
+            return True
+    return False
+
 def is_valid_word(word, hand, word_list):
     """
     Returns True if word is in the word_list and is entirely
