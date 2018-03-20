@@ -14,13 +14,7 @@ VOWELS = 'aeiou'
 CONSONANTS = 'bcdfghjklmnpqrstvwxyz'
 HAND_SIZE = 7
 
-SCRABBLE_LETTER_VALUES = {
-    'a': 1, 'b': 3, 'c': 3, 'd': 2, 'e': 1, 'f': 4,
-    'g': 2, 'h': 4, 'i': 1, 'j': 8, 'k': 5, 'l': 1,
-    'm': 3, 'n': 1, 'o': 1, 'p': 3, 'q': 10, 'r':1,
-    's': 1, 't': 1, 'u': 1, 'v': 4, 'w': 4, 'x': 8,
-    'y': 4, 'z': 10
-}
+SCRABBLE_LETTER_VALUES = {'a': 1, 'b': 3, 'c': 3, 'd': 2, 'e': 1, 'f': 4, 'g': 2, 'h': 4, 'i': 1, 'j': 8, 'k': 5, 'l': 1, 'm': 3, 'n': 1, 'o': 1, 'p': 3, 'q': 10, 'r': 1, 's': 1, 't': 1, 'u': 1, 'v': 4, 'w': 4, 'x': 8, 'y': 4, 'z': 10,}
 
 # -----------------------------------
 # Helper code
@@ -137,14 +131,15 @@ def deal_hand(n):
     n: int >= 0
     returns: dictionary (string -> int)
     """
-    
+
     hand={}
     num_vowels = int(math.ceil(n / 3))
-    hand['*'] = 1
 
-    for i in range(num_vowels-1):
+    for i in range(num_vowels - 1):
         x = random.choice(VOWELS)
         hand[x] = hand.get(x, 0) + 1
+
+    hand["*"] = 0
     
     for i in range(num_vowels, n):    
         x = random.choice(CONSONANTS)
@@ -184,6 +179,16 @@ def update_hand(hand, word):
 # Problem #3: Test word validity
 #
 
+def show_possible_matches(my_word, word_list):
+    match = ''
+    for i in word_list:
+        if match_with_gaps(my_word, i):match += i + " "
+    if len(match) == 0:
+        return False
+    match=match.split(' ')
+    del match[-1]
+    return match
+
 def match_with_gaps(my_word, other_word):
     h = 0
     word = ''.join(my_word.split())
@@ -220,8 +225,18 @@ def is_valid_word(word, hand, word_list):
                 if hand[i]<word.count(i):
                     return False
             else: number+=1
-        if number==len(word): return False
-    return True
+        if number > 0: return False
+        return True
+    else:
+        if not show_possible_matches(word, word_list):
+            return False
+        else:
+            for i in show_possible_matches(word, word_list):
+                if i[word.index('*')] in VOWELS:
+                     return True
+                else:
+                     return False
+    return False
 
 
 #
