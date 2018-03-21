@@ -249,8 +249,7 @@ def calculate_handlen(hand):
     hand: dictionary (string-> int)
     returns: integer
     """
-    return len(hand)
-
+    return sum(hand.values())
 
 def play_hand(hand, word_list):
 
@@ -282,7 +281,20 @@ def play_hand(hand, word_list):
       returns: the total score for the hand
       
     """
-    
+    totalscore=0
+    while len(hand)>0:
+        print("Current hand", display_hand(hand))
+        word=input('Enter word, or "!!" to indicate that you are finished: ')
+        if word == '!!':
+            break
+        else:
+            if is_valid_word(word, hand, word_list):
+                totalscore+=get_word_score(word, calculate_handlen(hand))
+                print("Word earned: ", get_word_score(word, calculate_handlen(hand)) + ". Total: ", totalscore, 'points')
+            else:
+                print("That is not a valid word. Please choose another word.")
+        update_hand(hand, word)
+    return 'Ran out of letters. Total score: ', totalscore, 'points.'
     # BEGIN PSEUDOCODE <-- Remove this comment when you implement this function
     # Keep track of the total score
     
