@@ -169,11 +169,20 @@ def update_hand(hand, word):
     returns: dictionary (string -> int)
     """
     hand = hand.copy()
-    for i in word.lower():
-        if i in hand.keys():
-            hand[i] = hand.get(i, 0) - 1
-        if hand[i]==0: del hand[i]
+    word = word.lower()
+    
+    for i in word:
+        if hand.get(i,0)>0:
+            hand[i]-=1
+        if hand.get(i,-1)==0:
+            del(hand[i])
     return hand
+####    hand = hand.copy()
+####    for i in word.lower():
+####        if i in hand.keys():
+####            hand[i] = hand.get(i, 0) - 1
+####        if hand[i]==0: del hand[i]
+####    return hand
 ##print(update_hand({'a':1, 'q':1, 'l':2, 'm':1, 'u':1, 'i':1}, 'quail'))
 #
 # Problem #3: Test word validity
@@ -282,19 +291,22 @@ def play_hand(hand, word_list):
       
     """
     totalscore=0
+##    display_hand(hand)
     while len(hand)>0:
-        print("Current hand", display_hand(hand))
+        display_hand(hand)
+        #print("Current hand: ") #;print(display_hand(hand))
         word=input('Enter word, or "!!" to indicate that you are finished: ')
         if word == '!!':
             break
         else:
             if is_valid_word(word, hand, word_list):
                 totalscore+=get_word_score(word, calculate_handlen(hand))
-                print("Word earned: ", get_word_score(word, calculate_handlen(hand)) + ". Total: ", totalscore, 'points')
+                print('"'+ word+ '"', "earned: ", get_word_score(word, calculate_handlen(hand)), ". Total: ", totalscore, 'points')
             else:
                 print("That is not a valid word. Please choose another word.")
         update_hand(hand, word)
     return 'Ran out of letters. Total score: ', totalscore, 'points.'
+play_hand({'a':1, 'j':1, 'e':1, 'f':1, '*':1, 'r':1, 'x':1}, load_words())
     # BEGIN PSEUDOCODE <-- Remove this comment when you implement this function
     # Keep track of the total score
     
@@ -404,6 +416,6 @@ def play_game(word_list):
 # Do not remove the "if __name__ == '__main__':" line - this code is executed
 # when the program is run directly, instead of through an import statement
 #
-if __name__ == '__main__':
-    word_list = load_words()
-    play_game(word_list)
+########if __name__ == '__main__':
+########    word_list = load_words()
+########    play_game(word_list)
