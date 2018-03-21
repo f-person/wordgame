@@ -292,8 +292,10 @@ def play_hand(hand, word_list):
     """
     totalscore=0
 ##    display_hand(hand)
-    while len(hand)>0:
+    while calculate_handlen(hand)>0:
+        print('Current Hand: ', end='')
         display_hand(hand)
+        #display_hand(hand)
         #print("Current hand: ") #;print(display_hand(hand))
         word=input('Enter word, or "!!" to indicate that you are finished: ')
         if word == '!!':
@@ -304,9 +306,15 @@ def play_hand(hand, word_list):
                 print('"'+ word+ '"', "earned: ", get_word_score(word, calculate_handlen(hand)), ". Total: ", totalscore, 'points')
             else:
                 print("That is not a valid word. Please choose another word.")
-        update_hand(hand, word)
-    return 'Ran out of letters. Total score: ', totalscore, 'points.'
-play_hand({'a':1, 'j':1, 'e':1, 'f':1, '*':1, 'r':1, 'x':1}, load_words())
+        print()
+##        print('before', hand)
+        hand=update_hand(hand, word)
+##        print('after', hand)
+    if len(hand)<=0: print("Ran out of letters. Total score: ", totalscore, 'points.')
+    else: print( "Total score: ", totalscore, "points.")
+##play_hand({'a':1, 'j':1, 'e':1, 'f':1, '*':1, 'r':1, 'x':1}, load_words())
+play_hand({'a':1, 'c':1, 'f':1, 'i':1, '*':1, 't':1, 'x':1}, load_words())
+
     # BEGIN PSEUDOCODE <-- Remove this comment when you implement this function
     # Keep track of the total score
     
