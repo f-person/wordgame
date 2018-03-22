@@ -4,7 +4,7 @@
 # Created by: Kevin Luu <luuk> and Jenna Wiens <jwiens>
 #
 # Name          : Arshak
-# Time spent    : 1:40 + 2:00 + 0:30 + 2:00
+# Time spent    : 1:40 + 2:00 + 0:30 + 2:00 + 2:00
 
 import math
 import random
@@ -169,8 +169,7 @@ def update_hand(hand, word):
     returns: dictionary (string -> int)
     """
     hand = hand.copy()
-    word = word.lower()
-    
+    word = word.lower()    
     for i in word:
         if hand.get(i,0)>0:
             hand[i]-=1
@@ -313,7 +312,7 @@ def play_hand(hand, word_list):
     if len(hand)<=0: print("Ran out of letters. Total score: ", totalscore, 'points.')
     else: print( "Total score: ", totalscore, "points.")
 ##play_hand({'a':1, 'j':1, 'e':1, 'f':1, '*':1, 'r':1, 'x':1}, load_words())
-play_hand({'a':1, 'c':1, 'f':1, 'i':1, '*':1, 't':1, 'x':1}, load_words())
+####play_hand({'a':1, 'c':1, 'f':1, 'i':1, '*':1, 't':1, 'x':1}, load_words())
 
     # BEGIN PSEUDOCODE <-- Remove this comment when you implement this function
     # Keep track of the total score
@@ -381,8 +380,16 @@ def substitute_hand(hand, letter):
     returns: dictionary (string -> int)
     """
     
-    pass  # TO DO... Remove this line when you implement this function
-       
+    if letter not in hand: return hand
+    win=False
+    while not win:
+        x=random.choice(VOWELS+CONSONANTS)
+        if x not in hand:
+            d1={x: hand[letter]}
+            hand.update(d1)
+            del hand[letter]
+            return hand
+##print(substitute_hand({'a':10, 'd':2, 'r':1, 'g':3}, 'g'))
     
 def play_game(word_list):
     """
