@@ -302,7 +302,7 @@ def play_hand(hand, word_list):
         else:
             if is_valid_word(word, hand, word_list):
                 totalscore+=get_word_score(word, calculate_handlen(hand))
-                print('"'+ word+ '"', "earned: ", get_word_score(word, calculate_handlen(hand)), ". Total: ", totalscore, 'points')
+                print('"'+ word+ '"', "earned:", str(get_word_score(word, calculate_handlen(hand))) + ". Total:", totalscore, 'points')
             else:
                 print("That is not a valid word. Please choose another word.")
         print()
@@ -421,16 +421,24 @@ def play_game(word_list):
 
     word_list: list of lowercase strings
     """
+        
+    numhand=int(input("Enter total number of hands: "))
+    hand=deal_hand(7)
+    print('Current Hand: ', end='')
+    display_hand(hand)
+    s = input("Would you like to substitute a letter? ")
+    if s == 'yes':
+        letter= input("Which letter would you like to replace: ")
+        substitute_hand(hand,letter)
+    play_hand(hand, word_list)
     
-    print("play_game not implemented.") # TO DO... Remove this line when you implement this function
-    
-
+        
 
 #
 # Build data structures used for entire session and play game
 # Do not remove the "if __name__ == '__main__':" line - this code is executed
 # when the program is run directly, instead of through an import statement
 #
-########if __name__ == '__main__':
-########    word_list = load_words()
-########    play_game(word_list)
+if __name__ == '__main__':
+    word_list = load_words()
+    play_game(word_list)
