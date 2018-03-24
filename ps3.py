@@ -311,6 +311,7 @@ def play_hand(hand, word_list):
 ##        print('after', hand)
     if len(hand)<=0: print("Ran out of letters. Total score: ", totalscore, 'points.')
     else: print( "Total score: ", totalscore, "points.")
+    return totalscore
 ##play_hand({'a':1, 'j':1, 'e':1, 'f':1, '*':1, 'r':1, 'x':1}, load_words())
 ####play_hand({'a':1, 'c':1, 'f':1, 'i':1, '*':1, 't':1, 'x':1}, load_words())
 
@@ -423,17 +424,23 @@ def play_game(word_list):
     """
         
     numhand=int(input("Enter total number of hands: "))
-    hand=deal_hand(7)
-    print('Current Hand: ', end='')
-    display_hand(hand)
-    s = input("Would you like to substitute a letter? ")
-    if s == 'yes':
-        letter= input("Which letter would you like to replace: ")
-        substitute_hand(hand,letter)
-    play_hand(hand, word_list)
-    
-        
-
+    totalscore=0
+    n=1
+    for i in range(numhand):
+        hand=deal_hand(HAND_SIZE)
+        print('Current Hand: ', end='')
+        display_hand(hand)
+        if n>0:
+            s=''
+            while s not in ['yes','no']:
+                s=input("Would you like to substitute a letter? ")
+                if s.lower()=='yes':
+                    n-=1
+                    letter= input("Which letter would you like to replace: ")
+                    hand=substitute_hand(hand,letter)
+        totalscore+=play_hand(hand, word_list)
+        print('----------')
+    print("Total score over all hands:", totalscore)
 #
 # Build data structures used for entire session and play game
 # Do not remove the "if __name__ == '__main__':" line - this code is executed
