@@ -1,2 +1,2 @@
 # wordgame
-console word game.
+console word game. 
